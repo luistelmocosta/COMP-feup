@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tiny example</title>
+  </head>
+  <body>
+
+    <script src="./FAParser.js"></script>
+    <script src="./viz.js"></script>
+    
+    <h1> COMPILADORES </h1> 
+
+    <form id="frm1">
+      Insert FA (.dot format): <input type="text" name="FAdot">
+      <input type="button" onclick="new FAParser()" value="Convert">
+    </form>
+
+    <p id="statesWeightDisplayer"> </p>
+    <p id="FADisplayer"></p>
+
+  </body>
+</html>

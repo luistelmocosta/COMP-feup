@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>FA->REGEX Converter </title>
+
+
+
+<link href="http://fonts.googleapis.com/css?family=Varela" rel="stylesheet" /> <!-- Fonts (nao e necessario tbm) -->
+<link href="fonts.css" rel="stylesheet" type="text/css" media="all" /> <!-- Desaparecem icons das boxes-->
+
+    <!-- Files -->
+    <link rel="stylesheet" href="Css/style.css">
+    <script src="./Parser/FAParser.js"></script>
+    <script src="./Viz/viz.js"></script>
+  </head>
+
+  <body>
+<div id="wrapper">
+  <div id="header-wrapper">
+  <div id="header" class="container">
+    <div id="logo">
+      <h1><a href="#">COMPILADORES</a></h1>
+    </div>
+    <div id="menu">
+      <ul>
+        <li class="current_page_item"><a href="#" accesskey="1" title="">Instructions</a></li>
+      </ul>
+    </div>
+  </div>
+  </div>
+  <div id="banner">
+    <div class="container">
+      <div class="title">
+        <h2>FA2RE-PC</h2>
+        <span class="byline">Finite Automaton (FA) to Regular Expression (REGEX) converter using Path Construction</span> </div>
+    </div>
+  </div>
+  <div id="extra" class="container">
+    <div class="title">
+      <div id="three-column">
+
+      <form id="frm1">
+        <input id="dotInp" type="text" placeholder="Insert your .dot expession" name="FAdot">
+        <input id="convBtn" type="button" onclick="new FAParser()" value="Convert">
+    </form>
+
+    <p id="statesWeightDisplayer"> </p>
+    <p id="FADisplayer"></p>
+      </div>
+    <ul class="actions">
+      <!-- <li><a href="#" class="button">Confirm</a></li> -->
+    </ul>
+  </div>
+  
+  </div>
+</div>
+<div id="copyright" class="container">
+  <p>@FEUP</p>
+  <p>Alexandre Ribeiro, Guilherme Routar, Luis</p>
+</div>
+</body>
+</html>
+
+<!--
+  <body>
+
+  <div id="header"> COMPILADORES </div>
+  <div id="main-wrap">
+    <div id="sidebar">Left Nav</div>
+    <div id="content-wrap">Content</div>
+  </div>
+  <div id="footer">Footer</div> -->
+  <!--
+
+    <form id="frm1">
+      Insert FA (.dot format): <input type="text" name="FAdot">
+      <input type="button" onclick="new FAParser()" value="Convert">
+    </form>
+
+    <p id="statesWeightDisplayer"> </p>
+    <p id="FADisplayer"></p>
+    -->
+<!--
+  </body>
+</html> -->

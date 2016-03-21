@@ -1,7 +1,0 @@
-build/
-prefix/
-sources/
-module.js
-viz.js
-viz.js.mem
-*.js.map

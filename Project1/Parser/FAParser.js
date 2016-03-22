@@ -9,6 +9,10 @@ function FAParser() {
 
 FAParser.prototype.init = function() {
 
+  //Displaying "weights' div" after button is clicked
+  var weightDiv = document.getElementById('statesWeightDisplayer');
+  weightDiv.style.display = "block";
+
   var content = document.getElementById("frm1");
 
   //FAdot stores the FA input by the user
@@ -98,8 +102,7 @@ FAParser.prototype.validate_FA_Syntax = function() {
 
   if (FAInterface == -1)
     document.getElementById("FADisplayer").innerHTML = "Syntax error. Try again.";
-  else 
-    this.validFA = 1;
+  else this.validFA = 1;
 };
 
 FAParser.prototype.pathWeight = function() {
@@ -125,6 +128,7 @@ FAParser.prototype.pathWeight = function() {
       //Creating input field for each path (transition)
       var weightInputField = document.createElement("input");
       weightInputField.id = "weightInput" + inputFieldsCounter;
+      weightInputField.className = "weight";
 
       inputFields.push(weightInputField);
       inputFieldsCounter++;
@@ -151,7 +155,7 @@ FAParser.prototype.handlePathWeights = function(inputFields) {
   var expStates = this.expressionStates;
   //Handling user's input (after button clicked)
   confirmBtn.onclick = function() {
-    
+
     //Saving input to an array (inputFields.value = [weight1, weight2, (...)])
     for (var i = 0; i < inputFields.length; i++) {
       var weightInput = document.getElementById(inputFields[i].id).value;

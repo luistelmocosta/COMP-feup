@@ -1,3 +1,6 @@
+function Alert() {
+  alert("Developed by Alexandre Ribeiro, João Sousa & Luís");
+}
 /**
  FAParser parses the .dot expression inserted by the user 
  by validating it's syntax (Viz.js) and initial and termination states
@@ -111,7 +114,8 @@ FAParser.prototype.pathWeight = function() {
   document.getElementById("statesWeightDisplayer").innerHTML = "";
 
   var weightInputTitle = document.createElement("h1");
-  weightInputTitle.appendChild(document.createTextNode("Insert transitions' weight"));
+  weightInputTitle.appendChild(document.createTextNode("Weight"));
+  document.getElementById("statesWeightDisplayer").innerHTML = "<br>";
   document.getElementById("statesWeightDisplayer").appendChild(weightInputTitle);
 
   var inputFieldsCounter = 1; var inputFields = [];
@@ -123,7 +127,7 @@ FAParser.prototype.pathWeight = function() {
       var transition;
       //&#8594 code for "->"; Displaying the transitions so user can insert paths' weights:
       //Ex. q0 -> q1 Weight:___
-      transition = "<br> <br>" + this.expressionStates[i][j] + " &#8594 " + this.expressionStates[i][j + 1] + "<br>"; 
+      transition = "<br>" + this.expressionStates[i][j] + " &#8594 " + this.expressionStates[i][j + 1] + " "; 
 
       //Creating input field for each path (transition)
       var weightInputField = document.createElement("input");
@@ -138,7 +142,7 @@ FAParser.prototype.pathWeight = function() {
       document.getElementById("statesWeightDisplayer").appendChild(weightInputField);
     }
   }
-  document.getElementById("statesWeightDisplayer").innerHTML += "<br>";
+  document.getElementById("statesWeightDisplayer").innerHTML += "<br> <br>";
 
   this.handlePathWeights(inputFields);
 }
@@ -149,6 +153,7 @@ FAParser.prototype.handlePathWeights = function(inputFields) {
   //Creating confirm button
   var confirmBtn = document.createElement("input");
   confirmBtn.type = "button";
+  confirmBtn.id = "confirmBtn"
   confirmBtn.value = "Confirm";
 
   //Saving obj array (this.expressionStates) to a variable so we can use manipulate it inside the onclick function
@@ -184,7 +189,8 @@ FAParser.prototype.handlePathWeights = function(inputFields) {
 
     //Creating new FA interface including transition weights
     var newDotStr = "digraph g {" + formatedStr + ";}";
-    document.getElementById("FADisplayer").innerHTML = Viz(newDotStr);
+    document.getElementById("FADisplayer").innerHTML = "<br> <br>";
+    document.getElementById("FADisplayer").innerHTML += Viz(newDotStr);
   };
 
   document.getElementById("statesWeightDisplayer").appendChild(confirmBtn);

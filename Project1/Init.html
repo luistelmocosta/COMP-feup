@@ -23,9 +23,7 @@
       <h1><a href="#">COMPILADORES</a></h1>
     </div>
     <div id="menu">
-      <ul>
-        <li class="current_page_item"><a href="#" accesskey="1" title="">Instructions</a></li>
-      </ul>
+        <input id="alert" type="button" onclick="Alert()" value="About"> 
     </div>
   </div>
   </div>
@@ -42,9 +40,10 @@
 
       <form id="frm1">
         <input id="dotInp" type="text" placeholder="Insert your .dot expession" name="FAdot">
-        <input id="convBtn" type="button" onclick="new FAParser()" value="Convert">
+        <input id="convBtn" type="button" onclick="new FAParser()" value="Convert"> 
     </form>
 
+    <br> <br> 
     <div id="statesWeightDisplayer"></div>
     <div id="FADisplayer"></div>
       </div>
@@ -61,26 +60,3 @@
 </div>
 </body>
 </html>
-
-<!--
-  <body>
-
-  <div id="header"> COMPILADORES </div>
-  <div id="main-wrap">
-    <div id="sidebar">Left Nav</div>
-    <div id="content-wrap">Content</div>
-  </div>
-  <div id="footer">Footer</div> -->
-  <!--
-
-    <form id="frm1">
-      Insert FA (.dot format): <input type="text" name="FAdot">
-      <input type="button" onclick="new FAParser()" value="Convert">
-    </form>
-
-    <p id="statesWeightDisplayer"> </p>
-    <p id="FADisplayer"></p>
-    -->
-<!--
-  </body>
-</html> -->

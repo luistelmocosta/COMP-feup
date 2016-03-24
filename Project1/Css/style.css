@@ -3,7 +3,28 @@
 		height: 100%;
 	}
 
+#alert {
+    background-color: #185B04; /* Green */
+    border: none;
+    padding: 13px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;	
+    cursor: pointer;
+		color: white;
+}
+
+	#alert:hover {
+		background-color: #0E3702;
+	}
 	#statesWeightDisplayer {
+		background: #DCDCDC;
+		width: 60%;
+		margin: auto;
 		display: none;
 		border: 3px solid #ccc;
 	}
@@ -24,7 +45,8 @@
 	}
 
 	.weight {
-		width: 80%;
+		width: 20%;
+		height: 10px;
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
@@ -51,13 +73,33 @@
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
     cursor: pointer;
-}
-	#convBtn {
-		background-color: #555555;
+    background-color: #555555;
 		color: white;
-	}
+}
 
 	#convBtn:hover {
+		background-color: #202020;
+	}
+
+	#confirmBtn {
+		line-height: 5px;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 13px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: #555555;
+		color: white;
+}
+
+	#confirmBtn:hover {
 		background-color: #202020;
 	}
 

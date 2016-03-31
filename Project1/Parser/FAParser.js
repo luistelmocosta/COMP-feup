@@ -33,10 +33,17 @@ FAParser.prototype.init = function() {
   this.initFinalStatesCounter(expressionsArray);
   //Validating states
   this.validate_FA_States();
+
   //Validating FA's syxtax using the "Viz.js" library 
-  if (this.validFAStates) this.validate_FA_Syntax();
-  else 
-    document.getElementById("FADisplayer").innerHTML = "Incorrect number of Initial/Termination states or syntax";
+  if (this.validFAStates) {
+    document.getElementById("FADisplayer").innerHTML = ""; //Emptying the div before displaying anything
+    this.validate_FA_Syntax();  
+  }
+  else {
+    //Making sure the div element is empty from a previous program usage (so that the error message will display correctly)
+    document.getElementById("statesWeightDisplayer").style = null;
+    document.getElementById("FADisplayer").innerHTML = "Incorrect Syntax or Number Of Initial/Termination States";
+  }
   
   if (this.validFA == 1) this.pathWeight();
 };
@@ -103,9 +110,7 @@ FAParser.prototype.validate_FA_Syntax = function() {
 
   var FAInterface = Viz(dotStr);
 
-  if (FAInterface == -1)
-    document.getElementById("FADisplayer").innerHTML = "Syntax error. Try again.";
-  else this.validFA = 1;
+  if (FAInterface != -1) this.validFA = 1;
 };
 
 FAParser.prototype.pathWeight = function() {

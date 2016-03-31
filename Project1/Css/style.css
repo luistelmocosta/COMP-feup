@@ -1,110 +1,7 @@
-	html, body
-	{
-		height: 100%;
-	}
+/* To fit the page */
+html, body { height: 100%; }
 
-#alert {
-    background-color: #185B04; /* Green */
-    border: none;
-    padding: 13px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;	
-    cursor: pointer;
-		color: white;
-}
-
-	#alert:hover {
-		background-color: #0E3702;
-	}
-	#statesWeightDisplayer {
-		background: #DCDCDC;
-		width: 60%;
-		margin: auto;
-		display: none;
-		border: 3px solid #ccc;
-	}
-
-	#dotInp  {
-		width: 80%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 3px solid #ccc;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
-    outline: none;
-	}
-
-	#dotInp:focus {
-		border: 3px solid #555;
-	}
-
-	.weight {
-		width: 20%;
-		height: 10px;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 3px solid #ccc;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
-    outline: none;
-	}
-
-	.weight:focus {
-		border: 3px solid #555;
-	}
-
-#convBtn {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 13px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    cursor: pointer;
-    background-color: #555555;
-		color: white;
-}
-
-	#convBtn:hover {
-		background-color: #202020;
-	}
-
-	#confirmBtn {
-		line-height: 5px;
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 13px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    cursor: pointer;
-    background-color: #555555;
-		color: white;
-}
-
-	#confirmBtn:hover {
-		background-color: #202020;
-	}
-
-	body
-	{
+	body {
 		margin: 0px;
 		padding: 0px;
 		background: #333333;
@@ -114,7 +11,6 @@
 		color: #656565;
 	}
 	
-	
 	h1, h2, h3
 	{
 		margin: 0;
@@ -122,44 +18,10 @@
 		font-weight: 700;
 		color: #2B3F48;
 	}
-	
-	p, ol, ul
+
+	#wrapper
 	{
-		margin-top: 0;
-	}
-	
-	ol, ul
-	{
-		padding: 0;
-		list-style: none;
-	}
-	
-	ul.actions
-	{
-		text-align: center;
-	}
-		
-		ul.actions li
-		{
-		}
-	
-	p
-	{
-		line-height: 180%;
-	}
-	
-	strong
-	{
-	}
-	
-	a
-	{
-		color: #0000FF;
-	}
-	
-	a:hover
-	{
-		text-decoration: none;
+		background: #FFF;
 	}
 	
 	.container
@@ -168,103 +30,8 @@
 		margin: 0em auto;
 		width: 1000px;
 	}
-	
-/*********************************************************************************/
-/* Image Style                                                                   */
-/*********************************************************************************/
 
-	.image
-	{
-		display: inline-block;
-	}
-	
-	.image img
-	{
-		display: block;
-		width: 100%;
-	}
-	
-	.image-full
-	{
-		display: block;
-		width: 100%;
-		margin: 0 0 2em 0;
-	}
-	
-	.image-left
-	{
-		float: left;
-		margin: 0 2em 2em 0;
-	}
-	
-	.image-centered
-	{
-		display: block;
-		margin: 0 0 2em 0;
-	}
-	
-	.image-centered img
-	{
-		margin: 0 auto;
-		width: auto;
-	}
-
-/*********************************************************************************/
-/* List Styles                                                                   */
-/*********************************************************************************/
-
-	ul.staff
-	{
-		margin-bottom: 3em;
-	}
-
-	ul.staff li
-	{
-		display: inline-block;
-	}
-	
-	ul.staff li img
-	{
-		width: 80%;
-		border-radius: 50%;
-	}
-
-
-/*********************************************************************************/
-/* Button Style                                                                  */
-/*********************************************************************************/
-
-	.button
-	{
-		display: inline-block;
-		padding: 0em 3em;
-		background: #009E2D;
-		letter-spacing: 0.20em;
-		line-height: 4em;
-		text-decoration: none;
-		text-transform: uppercase;
-		font-weight: 400;
-		font-size: 1em;
-		color: #FFF;
-	}
-	
-	.button:before
-	{
-		display: inline-block;
-		background: #FFC31F;
-		margin-right: 1em;
-		width: 40px;
-		height: 40px;
-		line-height: 40px;
-		border-radius: 20px;
-		text-align: center;
-		color: #272925;
-	}
-	
-/*********************************************************************************/
-/* Heading Titles                                                                */
-/*********************************************************************************/
-
+/* Heading Titles */
 	.title
 	{
 		margin-bottom: 3em;
@@ -281,68 +48,9 @@
 		font-size: 1.4em;
 		color: #6F6F6F;
 	}
-		
-/*********************************************************************************/
-/* 4-column                                                                      */
-/*********************************************************************************/
+/* ---------- */
 
-	.box1,
-	.box2,
-	.box3,
-	.box4
-	{
-		width: 235px;
-	}
-	
-	.box1,
-	.box2,
-	.box3,
-	{
-		float: left;
-		margin-right: 20px;
-	}
-	
-	.box4
-	{
-		float: right;
-	}
-	
-/*********************************************************************************/
-/* 3-column                                                                      */
-/*********************************************************************************/
-
-	.boxA,
-	.boxB,
-	.boxC
-	{
-		width: 500px;
-		height: 200px;
-	}
-
-
-	.boxA,
-	.boxB
-	{
-		float: left;
-		margin-right: 20px;
-	}
-	
-	/*
-	.boxC
-	{
-		float: right;
-	}
-	*/
-
-	#wrapper
-	{
-		background: #FFF;
-	}
-
-/*********************************************************************************/
-/* Header                                                                        */
-/*********************************************************************************/
-
+/* Header wrapper */
 	#header-wrapper
 	{
 		background: #202020;
@@ -354,79 +62,29 @@
 		padding: 3em 0em;
 	}
 
-/*********************************************************************************/
-/* Logo                                                                          */
-/*********************************************************************************/
-
-	#logo
-	{
-		position: absolute;
-		top: 1em;
-		left: 0;
-	}
-	
-	#logo h1
-	{
-		color: #FFF;
-	}
-	
-	#logo a
-	{
-		text-decoration: none;
-		text-transform: uppercase;
-		color: #FFF;
-	}
-
-/*********************************************************************************/
-/* Menu                                                                          */
-/*********************************************************************************/
-
 	#menu
 	{
 		position: absolute;
 		top: 2em;
 		right: 0;
 	}
-	
-	#menu ul
+
+	#UC_Name
 	{
-		display: inline-block; 
+		position: absolute;
+		top: 1em;
+		left: 0;
 	}
 	
-	#menu li
+	#UC_Name a
 	{
-		display: block;
-		float: left; 
-		text-align: center;
-	}
-	
-	#menu li a, #menu li span
-	{
-		padding: 1em 1.5em; 
-		letter-spacing: 1px;
 		text-decoration: none;
 		text-transform: uppercase;
-		font-size: 0.8em;
-		color: grey;
-		
+		color: #FFF;
 	}
-	
-	#menu li:hover a, #menu li.active a, #menu li.active span
-	{
-		color: white;
-	}
-	
-	#menu .current_page_item a
-	{
-		background: #009E2D;
-		color: white;
-	}
-	
+/* ---------- */
 
-/*********************************************************************************/
-/* Banner                                                                        */
-/*********************************************************************************/
-
+/* Banner */
 	#banner
 	{
 		overflow: hidden;
@@ -439,6 +97,7 @@
 
 	#banner .title
 	{
+		margin-top: -0.5em;
 		margin-bottom: 1em;
 	}
 
@@ -446,97 +105,132 @@
 	{
 		color: #FFF;
 	}
+/* ---------- */
 
-	#banner .title .byline
-	{
-		color: rgba(255,255,255,.6);
-	}
-	
-	#banner .button
-	{
-		margin-top: 3em;
-		background: #009E2D !important;
-	}
-
-/*********************************************************************************/
-/* Page                                                                          */
-/*********************************************************************************/
-
-	#page
-	{
-		padding: 5em 0em;
-		text-align: center;
-	}
-	
-	#page .button
-	{
-		margin-top: 2em;
-		display: inline-block;
-		text-align: center;
-	}
-
-/*********************************************************************************/
-/* Copyright                                                                     */
-/*********************************************************************************/
-
-	#copyright
+/* Displayer */
+	#displayer
 	{
 		overflow: hidden;
 		padding: 5em 0em;
+		text-align: center;
+	}
+
+	#dotInp  {
+		width: 80%;
+    	padding: 12px 20px;
+    	margin: 8px 0;
+    	box-sizing: border-box;
+    	border: 3px solid #ccc;
+        -webkit-transition: 0.5s;
+    	transition: 0.5s;
+    	outline: none;
+	}
+
+	#dotInp:focus {
+		border: 3px solid #555;
+	}
+
+	/* This class is created in FAParser.js */ 
+	.weight {
+		width: 20%;
+		height: 10px;
+    	padding: 12px 20px;
+    	margin: 8px 0;
+    	box-sizing: border-box;
+    	border: 3px solid #ccc;
+        -webkit-transition: 0.5s;
+    	transition: 0.5s;
+    	outline: none;
+	}
+
+	.weight:focus {
+		border: 3px solid #555;
+	}
+
+	#statesWeightDisplayer {
+		background: #DCDCDC;
+		width: 60%;
+		margin: auto;
+		display: none;
+		border: 3px solid #ccc;
+	}
+/* ---------- */
+
+/* Footer */
+	#footer
+	{
+		overflow: hidden;
+		padding: 3em 0em;
 		border-top: 1px solid rgba(255,255,255,0.08);
 	}
 	
-	#copyright p
+	#footer p
 	{
-		text-align: center;
-		font-size: 1em;
+		font-size: 1.1em;
 		color: rgba(255,255,255,0.5);
 	}
-	
-	#copyright a
-	{
-		text-decoration: none;
-		color: rgba(255,255,255,0.8);
+/* ---------- */
+
+/* Buttons */
+	#alert {
+		background-color: #185B04; /* Green */
+    	border: none;
+    	padding: 13px 32px;
+    	text-align: center;
+    	text-decoration: none;
+    	display: inline-block;
+    	font-size: 16px;
+    	margin: 4px 2px;
+        -webkit-transition-duration: 0.4s; /* Safari */
+    	transition-duration: 0.4s;	
+    	cursor: pointer;
+		color: white;
 	}
 
-
-
-/*********************************************************************************/
-/* Featured                                                                      */
-/*********************************************************************************/
-
-.box
-{
-	padding: 3em 2em 2em 2em;
-	border: 3px solid rgba(0,1,1,1);
-	/*border: 5px solid rgba(0,0,0,0.1);*/
-	border-radius: 8px;
-		text-align: center;
-}
-
-	#extra
-	{
-		overflow: hidden;
-		padding: 5em 0em;
-	}
-	
-	#extra .title
-	{
-		text-align: center;
-	}
-	
-	#extra .button
-	{
-		margin-top: 5em;
-	}
-	
-	#extra .fa
-	{
-		display: block;
-		margin-bottom: 0.5em;
-		text-align: center;
-		font-size: 3em;
+	#alert:hover {
+		background-color: #0E3702;
 	}
 
+	#convBtn {
+    	background-color: #4CAF50; /* Green */
+    	border: none;
+    	color: white;
+    	padding: 13px 32px;
+    	text-align: center;
+    	text-decoration: none;
+    	display: inline-block;
+    	font-size: 16px;
+    	margin: 4px 2px;
+        -webkit-transition-duration: 0.4s; /* Safari */
+    	transition-duration: 0.4s;
+    	cursor: pointer;
+    	background-color: #555555;
+		color: white;
+	}
 
+	#convBtn:hover {
+		background-color: #202020;
+	}
 
+	#confirmBtn {
+		line-height: 5px;
+    	background-color: #4CAF50; 
+    	border: none;
+    	color: white;
+    	padding: 13px 32px;
+    	text-align: center;
+    	text-decoration: none;
+    	display: inline-block;
+    	font-size: 16px;
+    	margin: 4px 2px;
+        -webkit-transition-duration: 0.4s; 
+    	transition-duration: 0.4s;
+    	cursor: pointer;
+    	background-color: #555555;
+	    color: white;
+    }
+
+    #confirmBtn:hover {
+	    background-color: #202020;
+    }
+/* ---------- */

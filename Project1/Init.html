@@ -3,60 +3,62 @@
   <head>
     <meta charset="utf-8">
     <title>FA->REGEX Converter </title>
-
-
-
-<link href="http://fonts.googleapis.com/css?family=Varela" rel="stylesheet" /> <!-- Fonts (nao e necessario tbm) -->
-<link href="Css/fonts.css" rel="stylesheet" type="text/css" media="all" /> <!-- Desaparecem icons das boxes-->
-
-    <!-- Files -->
+    <!-- Imported Viz library (graph viewer) -->
+    <script src="./Viz/viz.js"></script>
+    <!-- Imported Font --> 
+    <link href="http://fonts.googleapis.com/css?family=Varela" rel="stylesheet" /> 
+    <!-- CSS File and Finite Automaton Parser -->
     <link rel="stylesheet" href="Css/style.css">
     <script src="./Parser/FAParser.js"></script>
-    <script src="./Viz/viz.js"></script>
   </head>
 
   <body>
-<div id="wrapper">
-  <div id="header-wrapper">
-  <div id="header" class="container">
-    <div id="logo">
-      <h1><a href="#">COMPILADORES</a></h1>
-    </div>
-    <div id="menu">
-        <input id="alert" type="button" onclick="Alert()" value="About"> 
-    </div>
-  </div>
-  </div>
-  <div id="banner">
-    <div class="container">
-      <div class="title">
-        <h2>FA2RE-PC</h2>
-        <span class="byline">Finite Automaton (FA) to Regular Expression (REGEX) converter using Path Construction</span> </div>
-    </div>
-  </div>
-  <div id="extra" class="container">
-    <div class="title">
-      <div id="three-column">
 
-      <form id="frm1">
-        <input id="dotInp" type="text" placeholder="Insert your .dot expession" name="FAdot">
-        <input id="convBtn" type="button" onclick="new FAParser()" value="Convert"> 
-    </form>
+  	<!-- HEADER/BODY -->
+    <div id="wrapper">
 
-    <br> <br> 
-    <div id="statesWeightDisplayer"></div>
-    <div id="FADisplayer"></div>
+      <!-- HEADER -->
+      <div id="header-wrapper">
+        <div id="header" class="container">
+          <div id="UC_Name">
+            <h1><a href="#">COMPILADORES</a></h1>
+          </div>
+          <div id="menu">
+            <input id="alert" type="button" onclick="Alert()" value="About"> 
+          </div>
+        </div>
       </div>
-    <ul class="actions">
-      <!-- <li><a href="#" class="button">Confirm</a></li> -->
-    </ul>
-  </div>
-  
-  </div>
-</div>
-<div id="copyright" class="container">
-  <p>@FEUP</p>
-  <p>Alexandre Ribeiro, Guilherme Routar, Luis</p>
-</div>
-</body>
+      <div id="banner">
+        <div class="container">
+          <div class="title">
+            <h2>FA2RE-PC</h2>
+            <span class="byline">Finite Automaton (FA) to Regular Expression (REGEX) converter using Path Construction</span> 
+          </div>
+        </div>
+      </div>
+      <!-- HEADER FINISHED -->
+    
+      <!-- MAIN CONTENT (BODY) -->
+      <div id="displayer" class="container">
+        <form id="frm1">
+          <input id="dotInp" type="text" placeholder="Insert your .dot expession" name="FAdot">
+          <input id="convBtn" type="button" onclick="new FAParser()" value="Convert"> 
+        </form>
+        <br> <br> 
+        <div id="statesWeightDisplayer"></div>
+        <div id="FADisplayer"></div>
+      </div>
+      <!-- MAIN CONTENT (BODY) FINISHED -->
+    
+    </div>
+    <!-- HEADER/BODY FINISHED -->
+
+    <!-- FOOTER -->
+    <div id="footer" class="container">
+      <p>@FEUP</p>
+      <p>Alexandre Ribeiro, Guilherme Routar, Luis</p>
+    </div>
+    <!-- FOOTER FINISHED -->
+
+  </body>
 </html>

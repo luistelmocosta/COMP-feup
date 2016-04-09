@@ -1,22 +1,22 @@
-function Alert() {
-  alert("Developed by Alexandre Ribeiro, João Sousa & Luís");
-}
-/**
- FAParser parses the .dot expression inserted by the user 
- by validating it's syntax (Viz.js) and initial and termination states
-*/
+//-----------//
+// FA PARSER //
+//-----------//
+
+//FAParser parses the .dot expression inserted by the user 
+//by validating it's syntax (Viz.js) and initial and termination states
 function FAParser() {
   this.validFA = 0;
   this.init();
-}
+};
 
+//Initializing elements
 FAParser.prototype.init = function() {
 
   //Displaying "weights' div" after button is clicked
-  var weightDiv = document.getElementById('statesWeightDisplayer');
+  var weightDiv = getElement('statesWeightDisplayer');
   weightDiv.style.display = "block";
 
-  var content = document.getElementById("frm1");
+  var content = getElement("frm1");
 
   //FAdot stores the FA input by the user
   this.FAdot = content.elements[0].value;
@@ -36,13 +36,13 @@ FAParser.prototype.init = function() {
 
   //Validating FA's syxtax using the "Viz.js" library 
   if (this.validFAStates) {
-    document.getElementById("FADisplayer").innerHTML = ""; //Emptying the div before displaying anything
+    getElement("FADisplayer").innerHTML = ""; //Emptying the div before displaying anything
     this.validate_FA_Syntax();  
   }
   else {
     //Making sure the div element is empty from a previous program usage (so that the error message will display correctly)
-    document.getElementById("statesWeightDisplayer").style = null;
-    document.getElementById("FADisplayer").innerHTML = "Incorrect Syntax or Number Of Initial/Termination States";
+    getElement("statesWeightDisplayer").style = null;
+    getElement("FADisplayer").innerHTML = "Incorrect Syntax or Number Of Initial/Termination States";
   }
   
   if (this.validFA == 1) this.pathWeight();
@@ -113,15 +113,16 @@ FAParser.prototype.validate_FA_Syntax = function() {
   if (FAInterface != -1) this.validFA = 1;
 };
 
+//This prototype initializes the transitions' symbols related elements 
 FAParser.prototype.pathWeight = function() {
 
   //Making sure the paragraph is empty
-  document.getElementById("statesWeightDisplayer").innerHTML = "";
+  getElement("statesWeightDisplayer").innerHTML = "";
 
   var weightInputTitle = document.createElement("h1");
-  weightInputTitle.appendChild(document.createTextNode("Weight"));
-  document.getElementById("statesWeightDisplayer").innerHTML = "<br>";
-  document.getElementById("statesWeightDisplayer").appendChild(weightInputTitle);
+  weightInputTitle.appendChild(document.createTextNode("Transitions' symbols"));
+  getElement("statesWeightDisplayer").innerHTML = "<br>";
+  getElement("statesWeightDisplayer").appendChild(weightInputTitle);
 
   var inputFieldsCounter = 1; var inputFields = [];
   for (var i = 0; i < this.expressionStates.length; i++) {
@@ -143,16 +144,16 @@ FAParser.prototype.pathWeight = function() {
       inputFieldsCounter++;
       
       //Adding transitions and input fields to the html content
-      document.getElementById("statesWeightDisplayer").innerHTML += transition;
-      document.getElementById("statesWeightDisplayer").appendChild(weightInputField);
+      getElement("statesWeightDisplayer").innerHTML += transition;
+      getElement("statesWeightDisplayer").appendChild(weightInputField);
     }
   }
-  document.getElementById("statesWeightDisplayer").innerHTML += "<br> <br>";
+  getElement("statesWeightDisplayer").innerHTML += "<br> <br>";
 
   this.handlePathWeights(inputFields);
 }
 
-
+//This prototype makes the transition from the transition symbols' input table to the FA displayer with the correct symbols
 FAParser.prototype.handlePathWeights = function(inputFields) {
 
   //Creating confirm button
@@ -168,7 +169,7 @@ FAParser.prototype.handlePathWeights = function(inputFields) {
 
     //Saving input to an array (inputFields.value = [weight1, weight2, (...)])
     for (var i = 0; i < inputFields.length; i++) {
-      var weightInput = document.getElementById(inputFields[i].id).value;
+      var weightInput = getElement(inputFields[i].id).value;
       if (weightInput == "") {
         console.log("Weight cannot be empty");
         break;
@@ -194,9 +195,58 @@ FAParser.prototype.handlePathWeights = function(inputFields) {
 
     //Creating new FA interface including transition weights
     var newDotStr = "digraph g {" + formatedStr + ";}";
-    document.getElementById("FADisplayer").innerHTML = "<br> <br>";
-    document.getElementById("FADisplayer").innerHTML += Viz(newDotStr);
+    getElement("FADisplayer").innerHTML = "<br> <br>";
+    getElement("FADisplayer").innerHTML += Viz(newDotStr);
   };
 
-  document.getElementById("statesWeightDisplayer").appendChild(confirmBtn);
+  getElement("statesWeightDisplayer").appendChild(confirmBtn);
+};
+
+//--------------------//
+// Auxiliar Functions //
+//--------------------//
+
+function About() {
+  alert("Developed by Alexandre Ribeiro, João Sousa & Luís");
+};
+
+function getElement(elem) {
+  return document.getElementById(elem);
+}
+
+function openExplorer() {
+  getElement('dotFile').click();
+  getElement('dotFile').addEventListener('change', readFile, false);
+};
+
+function readFile(event) {
+
+    getElement("FADisplayer").innerHTML = "";
+    getElement("statesWeightDisplayer").style = null;
+
+    //Getting first file selected
+    var file = event.target.files[0]; 
+
+    if (file) {
+
+      //Reading input file
+      var reader = new FileReader();
+
+      reader.onload = function(event) {
+
+        if (file.type == "text/plain") { //|| file.type == "application/msword" (dot file)
+          //Displaying file content on "dotInp" input
+          var contents = event.target.result;
+          getElement('dotInp').value = contents;
+        }
+        else {
+          getElement('dotInp').value = "";
+          getElement("statesWeightDisplayer").style = "block";
+          getElement("FADisplayer").innerHTML = "Incorrect file type";
+        }
+      }
+      
+      reader.readAsText(file);
+    } 
+    else alert("Failed to load file");
 };

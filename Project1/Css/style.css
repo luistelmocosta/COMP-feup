@@ -191,7 +191,7 @@ html, body { height: 100%; }
 		background-color: #0E3702;
 	}
 
-	#convBtn {
+	#btn {
     	background-color: #4CAF50; /* Green */
     	border: none;
     	color: white;
@@ -208,7 +208,7 @@ html, body { height: 100%; }
 		color: white;
 	}
 
-	#convBtn:hover {
+	#btn:hover {
 		background-color: #202020;
 	}
 
@@ -232,5 +232,9 @@ html, body { height: 100%; }
 
     #confirmBtn:hover {
 	    background-color: #202020;
+    }
+
+    #dotFile {
+    	display: none;
     }
 /* ---------- */

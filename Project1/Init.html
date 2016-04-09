@@ -24,7 +24,7 @@
             <h1><a href="#">COMPILADORES</a></h1>
           </div>
           <div id="menu">
-            <input id="alert" type="button" onclick="Alert()" value="About"> 
+            <input id="alert" type="button" onclick="About()" value="About"> 
           </div>
         </div>
       </div>
@@ -42,7 +42,10 @@
       <div id="displayer" class="container">
         <form id="frm1">
           <input id="dotInp" type="text" placeholder="Insert your .dot expession" name="FAdot">
-          <input id="convBtn" type="button" onclick="new FAParser()" value="Convert"> 
+          <input id="btn" type="button" onclick="new FAParser()" value="Convert">
+
+          <input id="btn" type="button" onclick="openExplorer()" value="Load .dot file">
+          <input id="dotFile" type="file">
         </form>
         <br> <br> 
         <div id="statesWeightDisplayer"></div>

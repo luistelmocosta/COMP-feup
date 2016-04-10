@@ -5,6 +5,11 @@
 //FAParser parses the .dot expression inserted by the user 
 //by validating it's syntax (Viz.js) and initial and termination states
 function FAParser() {
+
+  //Clearing display
+  getElement("FADisplayer").innerHTML = "";
+  getElement("statesWeightDisplayer").style = null;
+
   this.validFA = 0;
   this.init();
 };
@@ -12,44 +17,27 @@ function FAParser() {
 //Initializing elements
 FAParser.prototype.init = function() {
 
-  //Displaying "weights' div" after button is clicked
-  var weightDiv = getElement('statesWeightDisplayer');
-  weightDiv.style.display = "block";
-
   var content = getElement("frm1");
 
   //FAdot stores the FA input by the user
   this.FAdot = content.elements[0].value;
 
-  //Spliting each FA's expression (q0 -> q1; q1 -> q2) - 2 expressions
-  var expressionsArray = this.FAdot.split(';');
+  this.parseStates();
+  if (this.FA_lexicalAnalysis()) //Validating states' names
+    if (this.FA_semanticAnalysis()) //Validating number of initial and final states
+      if (this.FA_syntaticAnalysis()) { //Viz analysis, mostly syntatical
+        this.validFA = 1;
+        this.initTransitionSymbols();
+      }
 
-  this.initialStateCounter = 0;
-  this.finalStateCounter = 0;
-  this.initFinalStateCounter = 0;
-  this.validFAStates = 0;
-
-  //Counting states
-  this.initFinalStatesCounter(expressionsArray);
-  //Validating states
-  this.validate_FA_States();
-
-  //Validating FA's syxtax using the "Viz.js" library 
-  if (this.validFAStates) {
-    getElement("FADisplayer").innerHTML = ""; //Emptying the div before displaying anything
-    this.validate_FA_Syntax();  
-  }
-  else {
-    //Making sure the div element is empty from a previous program usage (so that the error message will display correctly)
-    getElement("statesWeightDisplayer").style = null;
-    getElement("FADisplayer").innerHTML = "Incorrect Syntax or Number Of Initial/Termination States";
-  }
-  
-  if (this.validFA == 1) this.pathWeight();
+  if (!this.validFA) getElement("FADisplayer").innerHTML = "Incorrect Syntax or Number Of Initial/Termination States";
 };
 
-//This prototype counts how many "Initial", "Final" and "InitFinal" states were inserted by the user
-FAParser.prototype.initFinalStatesCounter = function(expressionsArray) {
+//This prototype creates an array (this.expressionStates) with each state inserted by the user
+FAParser.prototype.parseStates = function() {
+
+  //Spliting each FA's expression (q0 -> q1; q1 -> q2) - 2 expressions
+  var expressionsArray = this.FAdot.split(';');
 
   //Storing the FA states in an array
   //Ex: q0 -> q1; q0->q2 : this.expressionStates = [["q0 ", " q1"], [" q0", "q2"]
@@ -67,62 +55,58 @@ FAParser.prototype.initFinalStatesCounter = function(expressionsArray) {
     var numOfStates = this.expressionStates[i].length;
 
     for (var j = 0; j < numOfStates; j++) {
-
       //Removing white spaces from states' array values: 
       //Ex. this.expressionStates = ['q0 ', 'q1 ', ' q2 '] => this.expressionStates formated = ['q0', 'q1', 'q2']
       state = this.expressionStates[i][j].trim();
       this.expressionStates[i][j] = state;
-
-      switch(state) {
-        case "Initial":
-            this.initialStateCounter++;
-            break;
-        case "Final":
-            this.finalStateCounter++;
-            break;
-        case "InitFinal":
-            this.initFinalStateCounter++;
-            break;
-        default:
-            break;
-      }
     }
   }
 };
 
-//This prototype checks whether the Initiation/Termination states were correctly inserted
-FAParser.prototype.validate_FA_States = function() {
+FAParser.prototype.FA_lexicalAnalysis = function() {
 
-  //Validating states
-  //Checking for 1 Initial and 1 Final state
-  if (this.initialStateCounter >= 1 & this.finalStateCounter >= 1 & this.initFinalStateCounter == 0)
-    this.validFAStates = 1;
-  //Checking for a both Initial and Final state, the rest of the possibilities are discarded for violating FA's rules
-  else if (this.initialStateCounter == 0 & this.finalStateCounter == 0 & this.initFinalStateCounter >= 1)
-    this.validFAStates = 1;
+  //        States:           Neutral          Initial    Final     InFin 
+  //                 ------------------------ --------- --------- ----------
+  var statesRegex = /^[A-EJ-ZGH][a-zA-Z0-9]*$|^I[0-9]*$|^F[0-9]*$|^IF[0-9]*$/;
+
+  for (var i = 0; i < this.expressionStates.length; i++) {
+    var numOfStates = this.expressionStates[i].length;
+    for (var j = 0; j < numOfStates; j++) {
+      if (!statesRegex.test(this.expressionStates[i][j])) return false;
+    }
+  }
+  return true;
+};
+
+//This prototype checks whether the Initiation/Termination states were correctly inserted
+FAParser.prototype.FA_semanticAnalysis = function() {
+  //TODO
+  return true;
 };
 
 //This prototype checks if the FA syntax is correct using Viz.js
-FAParser.prototype.validate_FA_Syntax = function() {
+FAParser.prototype.FA_syntaticAnalysis = function() {
 
-  //Creating FA's string for Viz to interpret
+  //Creating FA's string for Viz to parse
   var dotStr = "digraph g {" + this.FAdot + ";}";
-
   var FAInterface = Viz(dotStr);
 
-  if (FAInterface != -1) this.validFA = 1;
+  if (FAInterface != -1) return true;
+  else return false;
 };
 
 //This prototype initializes the transitions' symbols related elements 
-FAParser.prototype.pathWeight = function() {
+FAParser.prototype.initTransitionSymbols = function() {
 
-  //Making sure the paragraph is empty
-  getElement("statesWeightDisplayer").innerHTML = "";
+  //Displaying "weights' div" after button is clicked
+  var transitionsDiv = getElement('statesWeightDisplayer');
+  transitionsDiv.innerHTML = "";
+  transitionsDiv.style.display = "block";
 
   var weightInputTitle = document.createElement("h1");
   weightInputTitle.appendChild(document.createTextNode("Transitions' symbols"));
-  getElement("statesWeightDisplayer").innerHTML = "<br>";
-  getElement("statesWeightDisplayer").appendChild(weightInputTitle);
+  transitionsDiv.innerHTML = "<br>";
+  transitionsDiv.appendChild(weightInputTitle);
 
   var inputFieldsCounter = 1; var inputFields = [];
   for (var i = 0; i < this.expressionStates.length; i++) {
@@ -144,17 +128,17 @@ FAParser.prototype.pathWeight = function() {
       inputFieldsCounter++;
       
       //Adding transitions and input fields to the html content
-      getElement("statesWeightDisplayer").innerHTML += transition;
-      getElement("statesWeightDisplayer").appendChild(weightInputField);
+      transitionsDiv.innerHTML += transition;
+      transitionsDiv.appendChild(weightInputField);
     }
   }
-  getElement("statesWeightDisplayer").innerHTML += "<br> <br>";
+  transitionsDiv.innerHTML += "<br> <br>";
 
-  this.handlePathWeights(inputFields);
+  this.parseTransitionSymbols(inputFields);
 }
 
 //This prototype makes the transition from the transition symbols' input table to the FA displayer with the correct symbols
-FAParser.prototype.handlePathWeights = function(inputFields) {
+FAParser.prototype.parseTransitionSymbols = function(inputFields) {
 
   //Creating confirm button
   var confirmBtn = document.createElement("input");
@@ -202,9 +186,9 @@ FAParser.prototype.handlePathWeights = function(inputFields) {
   getElement("statesWeightDisplayer").appendChild(confirmBtn);
 };
 
-//--------------------//
-// Auxiliar Functions //
-//--------------------//
+//-----------------//
+// Other Functions //
+//-----------------//
 
 function About() {
   alert("Developed by Alexandre Ribeiro, João Sousa & Luís");

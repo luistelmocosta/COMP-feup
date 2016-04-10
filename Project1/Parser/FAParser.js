@@ -146,6 +146,8 @@ FAParser.prototype.parseTransitionSymbols = function(inputFields) {
   confirmBtn.id = "confirmBtn"
   confirmBtn.value = "Confirm";
 
+  var symbolsRegex = /[A-Z0-9]*/;
+
   //Saving obj array (this.expressionStates) to a variable so we can use manipulate it inside the onclick function
   var expStates = this.expressionStates;
   //Handling user's input (after button clicked)
@@ -153,13 +155,10 @@ FAParser.prototype.parseTransitionSymbols = function(inputFields) {
 
     //Saving input to an array (inputFields.value = [weight1, weight2, (...)])
     for (var i = 0; i < inputFields.length; i++) {
+
       var weightInput = getElement(inputFields[i].id).value;
-      if (weightInput == "") {
-        console.log("Weight cannot be empty");
-        break;
-      }
-      else
-        inputFields[i].value = weightInput;
+      if (symbolsRegex.test(weightInput)) inputFields[i].value = weightInput;
+      else console.log("Doesnt match");
     }
 
     //Creating new string (.dot) so we can redraw the FA with the weights inserted by the user

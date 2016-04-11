@@ -146,40 +146,44 @@ FAParser.prototype.parseTransitionSymbols = function(inputFields) {
   confirmBtn.id = "confirmBtn"
   confirmBtn.value = "Confirm";
 
-  var symbolsRegex = /[A-Z0-9]*/;
-
   //Saving obj array (this.expressionStates) to a variable so we can use manipulate it inside the onclick function
   var expStates = this.expressionStates;
   //Handling user's input (after button clicked)
   confirmBtn.onclick = function() {
 
+    var symbolsRegex = /^[^A-Z]*$/;
+    var validInput = 1;
+
     //Saving input to an array (inputFields.value = [weight1, weight2, (...)])
     for (var i = 0; i < inputFields.length; i++) {
 
-      var weightInput = getElement(inputFields[i].id).value;
+      var weightInput = getElement(inputFields[i].id).value; 
       if (symbolsRegex.test(weightInput)) inputFields[i].value = weightInput;
-      else console.log("Doesnt match");
+      else validInput = 0;
     }
 
-    //Creating new string (.dot) so we can redraw the FA with the weights inserted by the user
-    //Ex. Weight(transition(q0->q1)) = a // .dot: q0->q1[label=a]
-    var inputIndex = 0;
-    var str = "";
-    for (var i = 0; i < expStates.length; i++) {
-      var numOfStates = expStates[i].length;
-      for (var j = 0; j < numOfStates - 1; j++) {
-        str += expStates[i][j] + "->" + expStates[i][j + 1] + "[label=" + inputFields[inputIndex].value + "]" + ";";
-        inputIndex++;
+    if (validInput) {
+      //Creating new string (.dot) so we can redraw the FA with the weights inserted by the user
+      //Ex. Weight(transition(q0->q1)) = a // .dot: q0->q1[label=a]
+      var inputIndex = 0;
+      var str = "";
+      for (var i = 0; i < expStates.length; i++) {
+        var numOfStates = expStates[i].length;
+        for (var j = 0; j < numOfStates - 1; j++) {
+          str += expStates[i][j] + "->" + expStates[i][j + 1] + "[label=" + inputFields[inputIndex].value + "]" + ";";
+          inputIndex++;
+        }
       }
+
+      //Removing last character (";") from the .dot expression
+      var formatedStr = str.substring(0, str.length-1);
+
+      //Creating new FA interface including transition weights
+      var newDotStr = "digraph g {" + formatedStr + ";}";
+      getElement("FADisplayer").innerHTML = "<br> <br>";
+      getElement("FADisplayer").innerHTML += Viz(newDotStr);
     }
-
-    //Removing last character (";") from the .dot expression
-    var formatedStr = str.substring(0, str.length-1);
-
-    //Creating new FA interface including transition weights
-    var newDotStr = "digraph g {" + formatedStr + ";}";
-    getElement("FADisplayer").innerHTML = "<br> <br>";
-    getElement("FADisplayer").innerHTML += Viz(newDotStr);
+    else getElement("FADisplayer").innerHTML = "Invalid transition symbol(s)";
   };
 
   getElement("statesWeightDisplayer").appendChild(confirmBtn);

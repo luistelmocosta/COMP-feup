@@ -22,6 +22,9 @@ FAParser.prototype.init = function() {
   //FAdot stores the FA input by the user
   this.FAdot = content.elements[0].value;
 
+  //Initializing states counter
+  this.inStates = 0, this.finStates = 0, this.inFinStates = 0, this.neutralStates = 0;
+
   this.parseStates();
   if (this.FA_lexicalAnalysis()) //Validating states' names
     if (this.FA_semanticAnalysis()) //Validating number of initial and final states
@@ -65,14 +68,25 @@ FAParser.prototype.parseStates = function() {
 
 FAParser.prototype.FA_lexicalAnalysis = function() {
 
-  //        States:           Neutral          Initial    Final     InFin 
-  //                 ------------------------ --------- --------- ----------
-  var statesRegex = /^[A-EJ-ZGH][a-zA-Z0-9]*$|^I[0-9]*$|^F[0-9]*$|^IF[0-9]*$/;
+  //Regex for each type of state (neutral, initial, final, initial/final)
+  var neutralRegex = /^[A-EJ-ZGH][a-zA-Z0-9]*$/;
+  var inRegex = /^I[0-9]*$/;
+  var finRegex = /^F[0-9]*$/;
+  var inFinRegex = /^IF[0-9]*$/;
 
   for (var i = 0; i < this.expressionStates.length; i++) {
     var numOfStates = this.expressionStates[i].length;
     for (var j = 0; j < numOfStates; j++) {
-      if (!statesRegex.test(this.expressionStates[i][j])) return false;
+      var state = this.expressionStates[i][j];
+
+      if (!inRegex.test(state))
+        if (!inFinRegex.test(state))
+          if (!finRegex.test(state))
+            if (!neutralRegex.test(state)) return false;
+            else this.neutralStates++;
+          else this.finStates++;
+        else this.inFinStates++;
+      else this.inStates++;
     }
   }
   return true;
@@ -80,7 +94,18 @@ FAParser.prototype.FA_lexicalAnalysis = function() {
 
 //This prototype checks whether the Initiation/Termination states were correctly inserted
 FAParser.prototype.FA_semanticAnalysis = function() {
-  //TODO
+
+  switch (this.inStates) {
+    case 0:
+      if (this.inFinStates != 1) return false;
+      break;
+    case 1:
+      if (this.inFinStates != 0 || this.finStates < 1) return false;
+      break;
+    default:
+      return false;
+      break;
+  } 
   return true;
 };
 

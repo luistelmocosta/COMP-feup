@@ -133,6 +133,16 @@ FAParser.prototype.initTransitionSymbols = function() {
   transitionsDiv.innerHTML = "<br>";
   transitionsDiv.appendChild(weightInputTitle);
 
+  var inputFields = drawTransitions();
+  transitionsDiv.innerHTML += "<br> <br>";
+
+  this.parseTransitionSymbols(inputFields);
+}
+
+//This prototype draws the states' transitions on the screen so the user can insert the symbols
+//Also creates a vector with the input values
+FAParser.prototype.drawTransitions = function {
+
   var inputFieldsCounter = 1; var inputFields = [];
   for (var i = 0; i < this.expressionStates.length; i++) {
 
@@ -157,10 +167,8 @@ FAParser.prototype.initTransitionSymbols = function() {
       transitionsDiv.appendChild(weightInputField);
     }
   }
-  transitionsDiv.innerHTML += "<br> <br>";
-
-  this.parseTransitionSymbols(inputFields);
-}
+  return inputFields;
+};
 
 //This prototype makes the transition from the transition symbols' input table to the FA displayer with the correct symbols
 FAParser.prototype.parseTransitionSymbols = function(inputFields) {

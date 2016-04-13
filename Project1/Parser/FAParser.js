@@ -133,7 +133,7 @@ FAParser.prototype.initTransitionSymbols = function() {
   transitionsDiv.innerHTML = "<br>";
   transitionsDiv.appendChild(weightInputTitle);
 
-  var inputFields = drawTransitions();
+  var inputFields = this.drawTransitions(transitionsDiv);
   transitionsDiv.innerHTML += "<br> <br>";
 
   this.parseTransitionSymbols(inputFields);
@@ -141,7 +141,7 @@ FAParser.prototype.initTransitionSymbols = function() {
 
 //This prototype draws the states' transitions on the screen so the user can insert the symbols
 //Also creates a vector with the input values
-FAParser.prototype.drawTransitions = function {
+FAParser.prototype.drawTransitions = function(transitionsDiv) {
 
   var inputFieldsCounter = 1; var inputFields = [];
   for (var i = 0; i < this.expressionStates.length; i++) {
@@ -225,19 +225,9 @@ FAParser.prototype.parseTransitionSymbols = function(inputFields) {
 //-----------------//
 // Other Functions //
 //-----------------//
-
-function About() {
-  alert("Developed by Alexandre Ribeiro, João Sousa & Luís");
-};
-
 function getElement(elem) {
   return document.getElementById(elem);
 }
-
-function openExplorer() {
-  getElement('dotFile').click();
-  getElement('dotFile').addEventListener('change', readFile, false);
-};
 
 function readFile(event) {
 

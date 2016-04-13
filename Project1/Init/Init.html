@@ -4,18 +4,19 @@
     <meta charset="utf-8">
     <title>FA->REGEX Converter </title>
     <!-- Imported Viz library (graph viewer) -->
-    <script src="./Viz/viz.js"></script>
+    <script src="../Viz/viz.js"></script>
     <!-- Imported Font --> 
     <link href="http://fonts.googleapis.com/css?family=Varela" rel="stylesheet" /> 
     <!-- CSS File and Finite Automaton Parser -->
-    <link rel="stylesheet" href="Css/style.css">
-    <script src="./Parser/FAParser.js"></script>
+    <link rel="stylesheet" href="../Css/style.css">
+    <script src="../Parser/FAParser.js"></script>
+    <script src="Init.js"></script>
   </head>
 
   <body>
 
   	<!-- HEADER/BODY -->
-    <div id="wrapper">
+    <div id="wrapper">  
 
       <!-- HEADER -->
       <div id="header-wrapper">
@@ -42,7 +43,7 @@
       <div id="displayer" class="container">
         <form id="frm1">
           <input id="dotInp" type="text" placeholder="Insert your .dot expession" name="FAdot">
-          <input id="btn" type="button" onclick="new FAParser()" value="Convert">
+          <input id="btn" type="button" onclick="new Init()" value="Convert">
 
           <input id="btn" type="button" onclick="openExplorer()" value="Load .dot file">
           <input id="dotFile" type="file">

@@ -46,12 +46,14 @@ FAParser.prototype.parseStates = function() {
   //Ex: q0 -> q1; q0->q2 : this.transitionStates = [["q0 ", " q1"], [" q0", "q2"]
   //(Notice the white spaces due to input's format)
   this.transitionStates = [];
-  for (var i = 0; i < expressionsArray.length; i++) {
+  var length = expressionsArray.length;
+  for (var i = 0; i < length; i++) {
     this.transitionStates.push(expressionsArray[i].split('->'));
   }
 
   var state;
-  for (var i = 0; i < this.transitionStates.length; i++) {
+  var length2 = this.transitionStates.length;
+  for (var i = 0; i < length2; i++) {
 
     //Number of states per expression: 
     //Ex. 2 expressions [q0 -> q1; q0 -> q2 -> q3) - (2 and 3 states, respectively)
@@ -74,7 +76,8 @@ FAParser.prototype.FA_lexicalAnalysis = function() {
   var finRegex = /^F[0-9]*$/;
   var inFinRegex = /^IF[0-9]*$/;
 
-  for (var i = 0; i < this.transitionStates.length; i++) {
+  var length =  this.transitionStates.length;
+  for (var i = 0; i < length; i++) {
     var numOfStates = this.transitionStates[i].length;
     for (var j = 0; j < numOfStates; j++) {
       var state = this.transitionStates[i][j];
@@ -144,7 +147,8 @@ FAParser.prototype.initTransitionSymbols = function() {
 FAParser.prototype.drawTransitions = function(transitionsDiv) {
 
   var inputFieldsCounter = 1; var inputFields = [];
-  for (var i = 0; i < this.transitionStates.length; i++) {
+  var length = this.transitionStates.length;
+  for (var i = 0; i < length; i++) {
 
     var numOfStates = this.transitionStates[i].length;
     for (var j = 0; j < numOfStates - 1; j++) {
@@ -152,7 +156,7 @@ FAParser.prototype.drawTransitions = function(transitionsDiv) {
       var transition;
       //&#8594 code for "->"; Displaying the transitions so user can insert paths' weights:
       //Ex. q0 -> q1 Weight:___
-      transition = "<br>" + this.transitionStates[i][j] + " &#8594 " + this.transitionStates[i][j + 1] + " "; 
+      transition = "<br>" + this.transitionStates[i][j] + " &#8594 " + this.transitionStates[i][j + 1] + " ";
 
       //Creating input field for each path (transition)
       var weightInputField = document.createElement("input");
@@ -179,16 +183,16 @@ FAParser.prototype.parseTransitionSymbols = function(inputFields) {
   confirmBtn.id = "confirmBtn"
   confirmBtn.value = "Confirm";
 
-  //Saving obj array (this.transitionStates) to a variable so we can use manipulate it inside the onclick function
-  var expStates = this.transitionStates;
+  //Saving parser (object) to a global variable so we can use it within onclick
+  var parser = this;
   //Handling user's input (after button clicked)
   confirmBtn.onclick = function() {
 
     var symbolsRegex = /^[^A-Z]*$/;
     var validInput = 1;
-
+    var length = inputFields.length;
     //Saving input to an array (inputFields.value = [weight1, weight2, (...)])
-    for (var i = 0; i < inputFields.length; i++) {
+    for (var i = 0; i < length; i++) {
 
       var weightInput = getElement(inputFields[i].id).value; 
       if (symbolsRegex.test(weightInput)) inputFields[i].value = weightInput;
@@ -198,12 +202,12 @@ FAParser.prototype.parseTransitionSymbols = function(inputFields) {
     if (validInput) {
       //Creating new string (.dot) so we can redraw the FA with the weights inserted by the user
       //Ex. Weight(transition(q0->q1)) = a // .dot: q0->q1[label=a]
-      var inputIndex = 0;
-      var str = "";
-      for (var i = 0; i < expStates.length; i++) {
-        var numOfStates = expStates[i].length;
+      var inputIndex = 0, str = "";
+      var length2 = parser.transitionStates.length;
+      for (var i = 0; i < length2; i++) {
+        var numOfStates = parser.transitionStates[i].length;
         for (var j = 0; j < numOfStates - 1; j++) {
-          str += expStates[i][j] + "->" + expStates[i][j + 1] + "[label=" + inputFields[inputIndex].value + "]" + ";";
+          str += parser.transitionStates[i][j] + "->" + parser.transitionStates[i][j + 1] + "[label=" + inputFields[inputIndex].value + "]" + ";";
           inputIndex++;
         }
       }
@@ -217,9 +221,38 @@ FAParser.prototype.parseTransitionSymbols = function(inputFields) {
       getElement("FADisplayer").innerHTML += Viz(newDotStr);
     }
     else getElement("FADisplayer").innerHTML = "Invalid transition symbol(s)";
+
+    //Initiating Path Construction algorithm
+    var singleTransitionsStates = parser.createSingleTransArray(inputFields);
+    new PathConstruction(parser.transitionStates, singleTransitionsStates);
   };
 
   getElement("statesWeightDisplayer").appendChild(confirmBtn);
+};
+
+//This prototype creates an array with each transition's symbol and states (useful for PC)
+//this.singleTransitionsArray = [[state1, state2, symbol1], [state2, state3, symbol2], (...)]
+FAParser.prototype.createSingleTransArray = function(inputFields) {
+
+  var singleTransitionsStates = [];
+  var length = this.transitionStates.length;
+  var inputIndex = 0;
+  
+  for (var i = 0; i < length; i++) {
+    var numOfStates = this.transitionStates[i].length;
+    for (var j = 0; j < numOfStates - 1; j++) {
+
+      var tempArray = []; 
+      tempArray.push(this.transitionStates[i][j]);
+      tempArray.push(this.transitionStates[i][j + 1]);
+      tempArray.push(inputFields[inputIndex].value);
+      
+      singleTransitionsStates.push(tempArray);
+
+      inputIndex++;
+    }
+  }
+  return singleTransitionsStates;
 };
 
 //-----------------//

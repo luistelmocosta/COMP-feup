@@ -76,21 +76,16 @@ FAParser.prototype.FA_lexicalAnalysis = function() {
   var finRegex = /^F[0-9]*$/;
   var inFinRegex = /^IF[0-9]*$/;
 
-  var length =  this.transitionStates.length;
-  for (var i = 0; i < length; i++) {
-    var numOfStates = this.transitionStates[i].length;
-    for (var j = 0; j < numOfStates; j++) {
-      var state = this.transitionStates[i][j];
+  var nonRepeatedStates = removeDups(matrixToArray(this.transitionStates)); //Reducing overhead
 
-      if (!inRegex.test(state))
+  for (var i = 0; i < nonRepeatedStates.length; i++) {
+    var state = nonRepeatedStates[i];
+    //Testing states' names using regex's
+    if (!inRegex.test(state))
         if (!inFinRegex.test(state))
           if (!finRegex.test(state))
-            if (!neutralRegex.test(state)) return false;
-            else this.neutralStates++;
-          else this.finStates++;
-        else this.inFinStates++;
-      else this.inStates++;
-    }
+            if (!neutralRegex.test(state)) 
+              return false;
   }
   return true;
 };
@@ -98,18 +93,26 @@ FAParser.prototype.FA_lexicalAnalysis = function() {
 //This prototype checks whether the Initiation/Termination states were correctly inserted
 FAParser.prototype.FA_semanticAnalysis = function() {
 
-  switch (this.inStates) {
-    case 0:
-      if (this.inFinStates != 1) return false;
-      break;
-    case 1:
-      if (this.inFinStates != 0 || this.finStates < 1) return false;
-      break;
-    default:
-      return false;
-      break;
-  } 
-  return true;
+  var statesArray = matrixToArray(this.transitionStates); //Contains repeated states
+  
+  var inStatesArray = [];
+  var inFinalStatesArray = [];
+
+  //Pushing initial and inFinal states to each array
+  for (var i = 0; i < statesArray.length; i++) {
+    if (statesArray[i].charAt(0) == 'I')
+      if (statesArray[i].charAt(1) == 'F')
+        inFinalStatesArray.push(statesArray[i]);
+      else inStatesArray.push(statesArray[i]);
+  }
+
+  //Counting the number of each states mentioned above (there must be only 1 initial OR 1 inFinal state)
+  inStatesArray = removeDups(inStatesArray);
+  inFinalStatesArray = removeDups(inFinalStatesArray);
+  if (inStatesArray.length == 1 && inFinalStatesArray.length == 0) return true;
+  else if (inStatesArray.length == 0 && inFinalStatesArray.length == 1) return true;
+
+  return false;
 };
 
 //This prototype checks if the FA syntax is correct using Viz.js

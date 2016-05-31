@@ -63,7 +63,7 @@ PathConstruction.prototype.checkDirectTransitions = function(state1, state2) {
 	return 'null'
 };
 
-PathConstruction.prototype.checkDirectTransitions = function(state1, state2) {
+PathConstruction.prototype.checkDirectTransitions2 = function(state1, state2) {}
 
 
 

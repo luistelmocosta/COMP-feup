@@ -1,6 +1,8 @@
-//-----------//
-// FA PARSER //
-//-----------//
+/*
+######################################################################
+                              FAParser
+######################################################################
+*/
 
 //FAParser parses the .dot expression inserted by the user 
 //by validating it's syntax (Viz.js) and initial and termination states
@@ -74,7 +76,7 @@ FAParser.prototype.FA_lexicalAnalysis = function() {
   var neutralRegex = /^[A-EJ-ZGH][a-zA-Z0-9]*$/;
   var inRegex = /^I[0-9]*$/;
   var finRegex = /^F[0-9]*$/;
-  var inFinRegex = /^IF[0-9]*$/;
+  var inFinRegex = /^E[0-9]*$/;
 
   var nonRepeatedStates = removeDups(matrixToArray(this.transitionStates)); //Reducing overhead
 
@@ -100,10 +102,16 @@ FAParser.prototype.FA_semanticAnalysis = function() {
 
   //Pushing initial and inFinal states to each array
   for (var i = 0; i < statesArray.length; i++) {
-    if (statesArray[i].charAt(0) == 'I')
-      if (statesArray[i].charAt(1) == 'F')
+    
+    var initialLetter = statesArray[i].charAt(0);
+    switch (initialLetter) {
+      case 'I':
+        inStatesArray.push(statesArray[i]);
+        break;
+      case 'E':
         inFinalStatesArray.push(statesArray[i]);
-      else inStatesArray.push(statesArray[i]);
+        break;
+    }
   }
 
   //Counting the number of each states mentioned above (there must be only 1 initial OR 1 inFinal state)

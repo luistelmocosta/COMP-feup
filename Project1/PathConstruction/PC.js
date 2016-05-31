@@ -1,104 +1,106 @@
-//-------------------//
-// Path Construction //
-//-------------------//
+/*
+######################################################################
+						   PathConstruction
+######################################################################
+*/
 
 function PathConstruction(transitionStates, singleTransitionsStates) {
 
 	this.transitionStates = transitionStates;
 	this.singleTransitionsStates = singleTransitionsStates;
 
-	//THis array contains all of the states of the FA (non repeated) 
-	this.states = [];
-	this.states = removeDups(matrixToArray(transitionStates));
-
 	this.init();
+
+	//Generate final unfolded string
+	new TreeStr(this.finalPathStr);
 };
 
 PathConstruction.prototype.init = function() {
 
-	var nStates = this.states.length;
+	//THis array contains all of the states of the FA (non repeated) 
+	this.states = [];
+	this.states = removeDups(matrixToArray(this.transitionStates));
 
-	//R[k][i][j]
-	this.R = createArray(nStates, nStates, nStates);
-	
-	//Initializing values for k = 0
-	for (var i = 0; i < nStates; i++) {
-		for (var j = 0; j < nStates; j++) {
-			//console.log("State " + this.states[i] + " to State " + this.states[j] + " = " + this.checkTransition(this.states[i], this.states[j]));
-			this.R[0][i][j] = this.checkDirectTransitions(this.states[i], this.states[j]);
-		}
-	}
-	this.calculateFinalExpression();
-};
+	//Generating final expression string
+	this.generateFinalPathStr();
 
-//To calculate the final regular expression we only need to calculate:
-//R[number of states][initial state][final state 1] + R[number of states][initial state][final state 2] + (...)
-//The final expression is obtained by the transitions between initial and final states
-PathConstruction.prototype.calculateFinalExpression = function() {
-
-	var nStates = this.states.length;
-	//var finExp = R[nStates][][];
-
-	var k = nStates;
-	var initS = -1; //Initial state
-	var finS = []; //Final state(s)
-	var inFinS = -1; //Initial and final state
-
-	for (var i = 0; i < nStates; i++) {
-
-		var state = this.states[i].charAt(0); //Getting only first char of the state name (since we can have I1, I2, IF3, F2, etc)
-		switch (state) {
-			case 'I':
-				if (this.states[i].charAt(1) == 'F') inFinS = i + 1;
-				else initS = i + 1;
-				break;
-			case 'F':
-				finS.push(i + 1);
-				break;
-			default:
-				break;
+	for (var i = 0; i < this.states.length; i++) {
+		for (var j = 0; j < this.states.length; j++) {
+			//console.log('Comparing states ' + this.states[i] + ' and ' + this.states[j]);
+			//console.log(this.checkDirectTransitions(this.states[i], this.states[j]));
 		}
 	}
 
-	var str = "Final Expression = ";
-	if (initS != -1) 
-	{
-		var fLength = finS.length;
-		if (fLength > 1) {
-			for (var i = 0; i < fLength; i++) {
-				str += 'R[' + k + ']' + '[' + initS + ']' + '[' + finS[i] + '] + ';
-			}
-		}
-		else str += 'R[' + k + ']' + '[' + initS + ']' + '[' + finS + '] + ';
-	}
-	else 
-	{
-		var fLength = finS.length;
-		if (fLength > 0) {
-			str += 'R[' + k + ']' + '[' + inFinS + ']' + '[' + inFinS + '] + ';
-			for (var i = 0; i < fLength; i++) {
-				str += 'R[' + k + ']' + '[' + inFinS + ']' + '[' + finS[i] + '] + ';
-			}
-		}
-		else str += 'R[' + k + ']' + '[' + inFinS + ']' + '[' + inFinS + ']';
-	}
-
-	console.log(str);
+	console.log(this.singleTransitionsStates);
 };
 
 //This prototype checks whether there is a direct transition between 2 states (state1 and state2)
 //And returns the symbol associated
 PathConstruction.prototype.checkDirectTransitions = function(state1, state2) {
 
+	//console.log(this.states);
+
 	var length = this.singleTransitionsStates.length;
+
 	for (var i = 0; i < length; i++) {
+		
 		var transition = this.singleTransitionsStates[i];
-		if (transition[0] == state1 && transition[1] == state2)
-			if (state1 == state2)
-				return 'EPSILON + ' + transition[2];
-			else return transition[2]; //returns symbol if there's a direct transition between states
+		if (transition[0] == state1 && transition[1] == state2) {
+			if (state1 == state2) {
+				return ('EPSILON + ' + transition[2]);
+			}
+			else {
+				return transition[2];
+			}
+		}
+		else {
+			if (state1 == state2) {
+				return 'EPSILON';
+			}
+		} 
 	}
-	return 'EPSILON';
+
+	return 'null'
 };
 
 
+//To calculate the final regular expression we only need to calculate:
+//R[number of states][initial state][final state 1] + R[number of states][initial state][final state 2] + (...)
+//The final expression is obtained by the transitions between initial and final states
+PathConstruction.prototype.generateFinalPathStr = function() {
+
+	this.finalPathStr = '';
+	var k = this.states.length; //number of states
+
+	var I = 0, F = [], E = 0; //I - Initial; F - Final; E - Both
+	for (var i = 0; i < k; i++) {
+
+		var state = this.states[i].charAt(0); //Getting only first char of the state name (since we can have I1, I2, IF3, F2, etc)
+
+		switch (state) {
+			case 'I':
+				I = i + 1;
+				break;
+			case 'F':
+				F.push(i + 1);
+				break;
+			case 'E':
+				F.push(i + 1);
+				E = i + 1;
+				break;
+			default:
+				break;
+		}
+	} 
+
+	var length = F.length;
+	if (I != 0) 
+		for (var i = 0; i < length; i++) this.finalPathStr += this.Rify(k, I, F[i]);
+	else 
+		for (var i = 0; i < length; i++) this.finalPathStr += this.Rify(k, E, F[i]);
+};
+
+PathConstruction.prototype.Rify = function(k,i,j) {
+
+	return str = 'R[' + k + '][' + i + '][' + j + ']';
+};

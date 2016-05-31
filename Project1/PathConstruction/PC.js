@@ -66,7 +66,14 @@ PathConstruction.prototype.aux = function(state1, state2) {
 		if (match) break;
 	}
 
+<<<<<<< HEAD
 	if (!match && state1 == state2) dirTrans = 'EPSI';
+=======
+	return 'null'
+};
+
+PathConstruction.prototype.checkDirectTransitions2 = function(state1, state2) {}
+>>>>>>> origin/master
 
 	console.log(dirTrans);
 	return dirTrans;

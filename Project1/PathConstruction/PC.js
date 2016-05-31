@@ -24,47 +24,53 @@ PathConstruction.prototype.init = function() {
 	//Generating final expression string
 	this.generateFinalPathStr();
 
-	for (var i = 0; i < this.states.length; i++) {
-		for (var j = 0; j < this.states.length; j++) {
-			//console.log('Comparing states ' + this.states[i] + ' and ' + this.states[j]);
-			//console.log(this.checkDirectTransitions(this.states[i], this.states[j]));
-		}
-	}
-
-	console.log(this.singleTransitionsStates);
+	this.checkDirectTransitions(this.states);		
 };
 
 //This prototype checks whether there is a direct transition between 2 states (state1 and state2)
 //And returns the symbol associated
-PathConstruction.prototype.checkDirectTransitions = function(state1, state2) {
+PathConstruction.prototype.checkDirectTransitions = function(statesArr) {
 
-	//console.log(this.states);
+	var length = statesArr.length;
+	var arr = [];
+	for (var i = 0; i < length; i++) {
+		for (var j = 0; j < length; j++) arr.push(this.aux(statesArr[i], statesArr[j]));
+	}
+
+	console.log(arr);
+};
+
+PathConstruction.prototype.aux = function(state1, state2) {
 
 	var length = this.singleTransitionsStates.length;
 
+	var match = 0;
+	var arr = [];
+	var dirTrans = 'null';
+
+	console.log(state1 + ' - ' + state2);
+
+	var s1, s2, symbol;
+
+	var length = this.singleTransitionsStates.length;
 	for (var i = 0; i < length; i++) {
 		
-		var transition = this.singleTransitionsStates[i];
-		if (transition[0] == state1 && transition[1] == state2) {
-			if (state1 == state2) {
-				return ('EPSILON + ' + transition[2]);
-			}
-			else {
-				return transition[2];
-			}
-		}
-		else {
-			if (state1 == state2) {
-				return 'EPSILON';
-			}
+		var transition = this.singleTransitionsStates[i]; //[state1, state2, symbol]
+		s1 = transition[0], s2 = transition[1], symbol = transition[2];
+
+		if (state1 == s1 && state2 == s2) {
+			match = 1;
+			if (state1 != state2) dirTrans = symbol; 			
+			else dirTrans = 'EPSI + ' + symbol;
 		} 
+		if (match) break;
 	}
 
-	return 'null'
+	if (!match && state1 == state2) dirTrans = 'EPSI';
+
+	console.log(dirTrans);
+	return dirTrans;
 };
-
-PathConstruction.prototype.checkDirectTransitions = function(state1, state2) {
-
 
 
 //To calculate the final regular expression we only need to calculate:

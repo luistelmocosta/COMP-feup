@@ -63,6 +63,9 @@ PathConstruction.prototype.checkDirectTransitions = function(state1, state2) {
 	return 'null'
 };
 
+PathConstruction.prototype.checkDirectTransitions = function(state1, state2) {
+
+
 
 //To calculate the final regular expression we only need to calculate:
 //R[number of states][initial state][final state 1] + R[number of states][initial state][final state 2] + (...)
